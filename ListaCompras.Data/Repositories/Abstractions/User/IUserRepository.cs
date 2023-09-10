@@ -5,8 +5,12 @@ namespace ListaComrpas.Data.Repositories.Abstractions.User
 {
     public interface IUserRepository
     {
-        Task<UserLoginResponse> Login(UserLoginRequest model);
+        Task<UserLoginResponse> GetAsync(UserLoginRequest model);
+        
+        Task CreateAsync(UserRegisterRequest model);
 
-        Task Register(UserRegisterRequest model);
+        Task EditAsync(UserEditRequest model);
+        
+        Task DeleteAsync(string id);
     }
 }
