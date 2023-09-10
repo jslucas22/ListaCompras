@@ -1,3 +1,4 @@
+using ListaCompras.Domain.Models.Database;
 using ListaComrpas.Business.Services.Abstractions.Items;
 using ListaComrpas.Business.Services.Abstractions.User;
 using ListaComrpas.Business.Services.Items;
@@ -9,6 +10,12 @@ using ListaComrpas.Data.Repositories.User;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var env = builder.Environment;
+
+builder.Configuration
+       .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+       .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: false, reloadOnChange: true);
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -19,6 +26,8 @@ builder.Services.AddScoped<IItemProductService, ItemProductService>();
 builder.Services.AddScoped<IItemProductRepository, ItemProductRepository>();
 builder.Services.AddScoped<IItemCartService, ItemCartService>();
 builder.Services.AddScoped<IItemCartRepository, ItemCartRepository>();
+
+DbStaticDefaults.ConnectionString = builder.Configuration.GetValue<string>("ConnectionStrings:connection");
 
 var app = builder.Build();
 
