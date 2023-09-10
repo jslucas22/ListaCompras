@@ -26,12 +26,12 @@ namespace ListaComrpas.Business.Services.User
 
         public async Task<UserLoginResponse> Login(UserLoginRequest model)
         {
-            return await _repository.Login(model);
+            return await _repository.GetAsync(model);
         }
 
         public async Task Register(UserRegisterRequest model)
         {
-            await _repository.Register(model);
+            await _repository.CreateAsync(model);
         } 
 
         #endregion
